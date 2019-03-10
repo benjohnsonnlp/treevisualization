@@ -14,7 +14,7 @@ class Node:
         self.as_graph().write_png(filename)
 
     def as_graph(self):
-        graph = pydot.Dot(graph_type="graph")
+        graph = pydot.Dot(graph_type="digraph")
 
         child_graphs = [c.as_graph() for c in self.children if c]
 
@@ -194,11 +194,11 @@ class AVL(BST):
 
 
 if __name__ == '__main__':
-    root = AVL()
-    for i in range(100):
-        root.insert(randint(0, 10000))
+    tree = AVL()
+    # for i in range(100):
+    #     root.insert(randint(0, 10000))
 
-    # for i in range(4):
-    #     root.insert(i)
+    for i in range(4):
+        tree.insert(i)
 
-    root.as_image("business.png")
+    tree.as_image("business.png")
