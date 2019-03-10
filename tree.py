@@ -16,18 +16,15 @@ class Node:
     def as_graph(self):
         graph = pydot.Dot(graph_type="digraph")
 
-        child_graphs = [c.as_graph() for c in self.children if c]
+        self.add_to_graph(graph)
+        return graph
 
-        for child_graph in child_graphs:
-            for edge in child_graph.get_edges():
-                graph.add_edge(edge)
-
+    def add_to_graph(self, graph):
+        if self.parent:
+            graph.add_edge(pydot.Edge(src=self.parent.name, dst=self.name))
         for child in self.children:
             if child:
-                edge = pydot.Edge(src=self.name, dst=child.name)
-                graph.add_edge(edge)
-
-        return graph
+                child.add_to_graph(graph)
 
 
 class BSTNode(Node):
@@ -195,8 +192,8 @@ class AVL(BST):
 
 if __name__ == '__main__':
     tree = AVL()
-    # for i in range(100):
-    #     root.insert(randint(0, 10000))
+    for i in range(100):
+        tree.insert(randint(0, 10000))
 
     for i in range(4):
         tree.insert(i)
