@@ -10,11 +10,11 @@ class Node:
         self.data = data
         self.name = name
 
-    def as_image(self, filename):
-        self.as_graph().write_png(filename)
+    def as_image(self, filename, label="graph"):
+        self.as_graph(label).write_png(filename)
 
-    def as_graph(self):
-        graph = pydot.Dot(graph_type="digraph")
+    def as_graph(self, label="graph"):
+        graph = pydot.Dot(graph_type="digraph", label=label)
 
         self.add_to_graph(graph)
         return graph
@@ -70,8 +70,8 @@ class BST:
         else:
             self.root.insert(data)
 
-    def as_image(self, filename):
-        self.root.as_image(filename)
+    def as_image(self, filename, label="graph"):
+        self.root.as_image(filename, label)
 
 
 class AVLNode(BSTNode):
@@ -192,10 +192,10 @@ class AVL(BST):
 
 if __name__ == '__main__':
     tree = AVL()
-    for i in range(100):
-        tree.insert(randint(0, 10000))
-
-    for i in range(4):
-        tree.insert(i)
-
-    tree.as_image("business.png")
+    inserted = []
+    for i in range(15):
+        data = randint(0, 53)
+        inserted.append(data)
+        tree.insert(data)
+    print(inserted)
+    tree.as_image("card.png", '\n' + str(inserted))
