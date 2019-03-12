@@ -160,14 +160,15 @@ class AVLNode(BSTNode):
         b.update_height()
         if z_parent:
             z_parent.update_height()
+        z.balance()
 
     def children_balanced(self):
-        if not self.left:
-            return self.right.height <= 1
+        if not self.right and not self.left:
+            return True
         elif not self.right:
             return self.left.height <= 1
-        elif not self.right and not self.left:
-            return True
+        elif not self.left:
+            return self.right.height <= 1
         else:
             return abs(self.left.height - self.right.height) < 2
 
@@ -193,9 +194,9 @@ class AVL(BST):
 if __name__ == '__main__':
     tree = AVL()
     inserted = []
-    for i in range(15):
-        data = randint(0, 53)
-        inserted.append(data)
-        tree.insert(data)
+    for i in range(6):
+        # data = randint(0, 53)
+        inserted.append(i)
+        tree.insert(i)
     print(inserted)
     tree.as_image("card.png", '\n' + str(inserted))
